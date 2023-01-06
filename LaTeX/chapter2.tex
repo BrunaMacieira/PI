@@ -1,0 +1,271 @@
+\chapter{Resolução} \label{chap:sota}
+
+ O seguinte projeto é composto por 8 questões, sendo a primeira composta por 3 alíneas. 
+
+ Alguns dos problemas propostos consistiam em:
+
+\begin{itemize}
+	\item carregar ficheiros de texto
+	\item listagem de informação
+	\item cálculo de determinadas fórmulas
+	\item gerar tabelas
+	\item gerar tabelas
+	\item exportar tabelas para ficheiros binários
+\end{itemize}
+
+\section{Resolução}
+
+Para a sua resolução, foi criado o "Main.h", onde seriam criadas as estruturas necessárias ao problema, cada uma referente a cada ficheiro de textos que já havia sido guardado, assim como as chamadas de todos os exercícios que seriam então criados. Contém, também, as bibliotecas necessárias para a resolução dos problemas.
+
+Com este criado, gerou-se o "Funcoes.c", ficheiro responsável por guardar todas as funções necessárias. Este chama o "Main.h" pelas razões vistas acima.
+
+\subsection{Exercício 2}
+Para a resolução do exercício 2, é necessária a função "ConvertToDate" presente no ficheiro "Auxiliar.c". Neste exercício, necessitamos da informação presente no ficheiro de texto "atividades", que irá ser analisada da maneira necessária e mostrada ao utilizador, mostrando se a atividade em questão foi ou não realizada e, se positivo, quantas vezes.
+
+
+\begin{lstlisting}[caption=Exemplo exercício 2]
+	for (i = 0; i < atividadesLen; i++)
+    {
+        
+        if (strcmp(atividades[i].nomeAtividade, nomeAtividade) 
+        == 0)
+        {
+            diaT = (atividades[i].data[0] - 48) * 10 + 
+            (atividades[i].data[1] - 48);
+            mesT = (atividades[i].data[3] - 48) * 10 + 
+            (atividades[i].data[4] - 48);
+            anoT = (atividades[i].data[6] - 48) * 1000 + 
+            (atividades[i].data[7] - 48) * 100 + 
+            (atividades[i].data[8] - 48) * 10 + 
+            (atividades[i].data[9] - 48) * 1;
+            
+            if (anoT >= anoI && anoT <= anoF)
+            {
+                totalT = convertToDate(diaT, mesT, anoT);
+                
+                if (totalT >= totalI && totalT <= totalF)
+                {
+                    ans++;
+                }
+            }
+        }
+    }
+    if (ans != 0)
+    {
+        printf("A atividade %s foi realizada %d vez%s entre %s e %s.\n",
+        nomeAtividade, ans, ans > 1 ? "es" : "",dataI, dataF);
+    }
+    else
+    {
+        printf("A atividade %s não foi realizada entre %s e %s.\n",
+        nomeAtividade, dataI, dataF);
+    }
+\end{lstlisting}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec1.png}  % largura percentual
+\caption{Answer to problem 2}
+\label{fig:ex2}
+\end{figure}
+
+\subsection{Exercício 3}
+Para a resolução do exercício 3, é necessária , também, a função "ConvertToDate". Neste exercício, necessitamos da informação presente nos ficheiros de texto "praticantes" e "atividades", para listar os praticantes por ordem decrescente de número de participante, que realizaram uma atividade num período de tempo.
+
+\begin{lstlisting}[caption=Exemplo exercício 3]
+for (i = 0; i < atividadesLen; i++)
+    {
+        for (p = praticantesLen; p >= 0; p--)
+        {
+            if (strcmp(atividades[i].numPraticante, praticantes[p].numPraticante) == 0)
+            {
+                diaT = (atividades[i].data[0] - 48) * 10 + (atividades[i].data[1] - 48);
+                mesT = (atividades[i].data[3] - 48) * 10 + (atividades[i].data[4] - 48);
+                anoT = (atividades[i].data[6] - 48) * 1000 + (atividades[i].data[7] - 48) 
+                * 100 + (atividades[i].data[8] - 48) * 10 + (atividades[i].data[9] - 48) * 1;
+                if (anoT >= anoI && anoT <= anoF)
+                {
+                    totalT = convertToDate(diaT, mesT, anoT);
+                    if (totalT >= totalI && totalT <= totalF)
+                    {
+                        printf("O praticante %s nº %s praticou %s no intervalo 
+                        selecionado.\n", praticantes[p].nome, 
+                        praticantes[p].numPraticante, atividades[i].nomeAtividade);
+                    }
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec2.png}  % largura percentual
+\caption{Answer to problem 3}
+\label{fig:ex3}
+\end{figure}
+
+\subsection{Exercício 4}
+Para a resolução do exercício 4, é necessária a função "ConvertToDate". Neste exercício, necessitamos da informação presente no ficheiro de texto "planoAt", para apresentar o plano de atividades de determinado tipo.
+A informação é pedida no ficheiro "Main.c", quando a função é chamada.
+
+\begin{lstlisting}[caption=Exemplo exercício 4]
+for (i = 0; i < planoLen; i++)
+    {
+        if (strcmp(plano[i].nomeAtividade, tipo) == 0)
+        {
+            diaI1 = (plano[i].dataInicio[0] - 48) * 10 + (plano[i].dataInicio[1] - 48);
+            mesI1 = (plano[i].dataInicio[3] - 48) * 10 + (plano[i].dataInicio[4] - 48);
+            anoI1 = (plano[i].dataInicio[6] - 48) * 1000 + (plano[i].dataInicio[7] - 48) 
+            * 100 + (plano[i].dataInicio[8] - 48) * 10 + (plano[i].dataInicio[9] - 48) * 1;
+
+            diaF1 = (plano[i].dataFim[0] - 48) * 10 + (plano[i].dataFim[1] - 48);
+            mesF1 = (plano[i].dataFim[3] - 48) * 10 + (plano[i].dataFim[4] - 48);
+            anoF1 = (plano[i].dataFim[6] - 48) * 1000 + (plano[i].dataFim[7] - 48) 
+            * 100 + (plano[i].dataFim[8] - 48) * 10 + (plano[i].dataFim[9] - 48) * 1;
+
+            if (anoI1 >= anoI && anoF1 <= anoF)
+            {
+                totalI1 = convertToDate(diaI1, mesI1, anoI1);
+                totalF1 = convertToDate(diaF1, mesF1, anoF1);
+
+                if (totalI <= totalI1 && totalF1 <= totalF)
+                {
+                    printf("%s foi praticado no intervalo %s - %s pelo praticante nº%s\n",
+                    plano[i].nomeAtividade, dataI, dataF, plano[i].numPraticante);
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec3.png}  % largura percentual
+\caption{Answer to problem 4}
+\label{fig:ex4}
+\end{figure}
+
+\subsection{Exercício 5}
+Para a resolução do exercício 5, necessitamos da informação presente nos ficheiros de texto "atividades" e "dados", para calcular a média dos tempos em que os praticantes estiveram envolvidos em atividades físicas. Para tal, é necessário os índices dos praticantes e das atividades, que irão ser comparados, assim como um contador. Será apresentado o tempo médio (em segundos) dos praticantes.
+
+\begin{lstlisting}[caption=Exemplo exercício 5]
+for (indiceP = 0; indiceP < praticantesLen; indiceP++)
+    {
+        // reiniciar os contadores
+        ans = 0;
+        counter = 0;
+        // ver todas as atividades realizadas
+        for (indiceA = 0; indiceA < atividadesLen; indiceA++)
+        {
+            // encontramos uma atividade praticada pelo praticante
+            if (strcmp(praticantes[indiceP].numPraticante, 
+            atividades[indiceA].numPraticante) == 0)
+            {
+                // contadores são incrementados
+                ans += atividades[indiceA].duracao;
+                counter++;
+            }
+        }
+        printf("O praticante %s demorou cerca de %.2f segundos em média 
+        por atividade.\n", praticantes[indiceP].nome, ans / counter);
+    }
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec4.png}  % largura percentual
+\caption{Answer to problem 5}
+\label{fig:ex5}
+\end{figure}
+
+\subsection{Exercício 6}
+Para a resolução do exercício 6, necessitamos da informação presente nos ficheiros de texto "dados" e "planoAt", para gerar uma tabela de atividades planeadas e realizadas para todos os participantes.
+
+\begin{lstlisting}[caption=Exemplo exercício 6]
+// iterar pelo plano das atividades
+    for (indiceA = 0; indiceA < planoLen; indiceA++)
+    {
+        // não sabemos o nome do praticante
+        strcpy(nome, "");
+        for (indiceP = 0; indiceP < praticantesLen; indiceP++)
+        {
+            // encontramos o praticante que queremos
+            if (strcmp(planoAtividades[indiceA].numPraticante,
+            praticantes[indiceP].numPraticante) == 0)
+            {
+                // guardamos o nome do praticante
+                strcpy(nome, praticantes[indiceP].nome);
+            }
+        }
+        // imprimir a linha da tabela
+        printf("%s \t %s \t %s \t %s \t %s \t %d \t %s\n", 
+        planoAtividades[indiceA].numPraticante, nome, planoAtividades[indiceA].nomeAtividade, planoAtividades[indiceA].dataInicio, planoAtividades[indiceA].dataFim, planoAtividades[indiceA].valor, planoAtividades[indiceA].unidade);
+    }
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec5.png}  % largura percentual
+\caption{Answer to problem 6}
+\label{fig:ex6}
+\end{figure}
+
+\subsection{Exercícios 7 e 8}
+Para a resolução do exercício 7 e 8, todos os ficheiros de texto serão necessários e será criado um ficheiro binário, para onde será transcrita a informação pedida.
+
+\begin{lstlisting}[caption=Exemplo exercícios 7 e 8]
+FILE *ex8 = fopen("ex8.bin", "w");
+    if (ex == 7)
+    {
+        printf("Numero \t Nome \t Inicio \t Fim \t\t Total \t Tempo \t Dia D \t\n");
+    }
+    for (indicePlano = 0; indicePlano < planoLen; indicePlano++)
+    {
+        total = 0;
+        tempo = 0;
+        for (indicePac = 0; indicePac < praticantesLen; indicePac++)
+        {
+            if (strcmp(plano[indicePlano].numPraticante, praticantes[indicePac].numPraticante) == 0)
+            {
+                for (indiceAR = 0; indiceAR < atividadesLen; indiceAR++)
+                {
+                    // encontramos uma atividade realizada pelo praticante, que pertence ao plano
+                    if (strcmp(atividades[indiceAR].numPraticante, praticantes[indicePac].numPraticante) == 0 && strcmp(atividades[indiceAR].nomeAtividade, plano[indicePlano].nomeAtividade) == 0)
+                    {
+                        total += atividades[indiceAR].valor;
+                        // guardar a unidade do valor
+                        strcpy(aux, atividades[indiceAR].unidade);
+                        tempo += atividades[indiceAR].duracao;
+                        // é o dia em que foi colocado mais esforço?
+                        if (atividades[indiceAR].valor > maxVal)
+                        {
+                            maxVal = atividades[indiceAR].valor;
+                            strcpy(maxData, atividades[indiceAR].data);
+                        }
+                    }
+                }
+                if (ex == 7)
+                {
+                    printf("%s \t %s \t %s \t %s \t %d%s \t %d \t %s \t\n", praticantes[indicePac].numPraticante, praticantes[indicePac].nome, plano[indicePlano].dataInicio, plano[indicePlano].dataFim, total, aux, tempo, maxData);
+                }
+                else
+                {
+                    fprintf(ex8, "%s \t %s \t %s \t %s \t %d%s \t %d \t %s \t\n", praticantes[indicePac].numPraticante, praticantes[indicePac].nome, plano[indicePlano].dataInicio, plano[indicePlano].dataFim, total, aux, tempo, maxData);
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\linewidth]{rec6.png}  % largura percentual
+\caption{Answer to problems 7 and 8}
+\label{fig:ex78}
+\end{figure}
+
+
+	
+
